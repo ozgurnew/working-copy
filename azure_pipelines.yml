@@ -119,12 +119,13 @@ stages:
                 UNIQUE_STORAGE: $(uniqueStorage)
           inputs:
             command: 'init'
+            commandOptions: '-reconfigure'
             backendType: 'azurerm'
             backendServiceArm: '$(serviceConnection)'
             ensureBackend: true
             backendAzureRmResourceGroupName: 'tf-pollinate-rg'
             backendAzureRmResourceGroupLocation: 'westus2'
-            backendAzureRmStorageAccountName: $(uniqueStorage)
+            backendAzureRmStorageAccountName: '$(uniqueStorage)'
             backendAzureRmContainerName: 'tf-datadog-k8s-pollinate'
             backendAzureRmKey: 'tf.state'
             allowTelemetryCollection: true
