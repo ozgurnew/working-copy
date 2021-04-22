@@ -21,6 +21,10 @@ variable "client_secret" {
   type = string
 }
 
+variable "unique_storage" {
+   type = string
+  default = "tfpollinatestorage"
+  }
 
 
 locals {
