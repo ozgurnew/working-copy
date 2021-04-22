@@ -105,7 +105,10 @@ hashicorp/kubernetes v2.1.0<br />
 I didn't declare it in code, but in a prod environment, they should be set to reduce the risk of significant dependency change, which requires you to take further action on your prod code.<br />
  <br />
 Here are the resources created after a successful launch:<br />
-![alt text](https://reminis-pip-alb.s3.amazonaws.com/schema.jpg)<br />
+
+![Diagram](http://reminis-pip-alb.s3.amazonaws.com/schema.jpg)
+
+<br />
  <br />
 ￼<br />
  <br />
