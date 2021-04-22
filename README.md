@@ -71,7 +71,7 @@ Why didn't I automate it? : Not all subscription types support Azure pipeline bu
  <br />
  <br />
 Tests:<br />
-This repo assumes if Terraform doesn't fail, it's successfully made what it should be made.<br />
+There can be test stages after apply by using Terraform CLI.<br />
  <br />
 Potential Problems and How to solve them:<br />
 Situation: Terraform provider versions have been changed, and deprecated code is failing. <br />
