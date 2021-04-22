@@ -1,6 +1,7 @@
 terraform {
   backend "azurerm" {
     resource_group_name  = "tf-pollinate-rg"
+    #change this account name for the local unique apply
     storage_account_name = var.unique_storage
     container_name       = "tf-datadog-k8s-pollinate"
     key                  = "tf.state"
