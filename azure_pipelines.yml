@@ -19,6 +19,7 @@ stages:
               ARM_CLIENT_SECRET: $(armClientSecret)
               ARM_CLIENT_ID: $(armClientId)
               ARM_SUBSCRIPTION_ID: $(armSubscriptionId)
+              UNIQUE_STORAGE: $(uniqueStorage)
             inputs:
               targetType: 'inline'
               script: |
@@ -27,6 +28,7 @@ stages:
                 echo client_id = \"$ARM_CLIENT_ID\" >> terraform.tfvars
                 echo client_secret = \"$ARM_CLIENT_SECRET\" >> terraform.tfvars
                 echo tenant_name = \"$ARM_TENANT_ID\" >> terraform.tfvars
+                echo unique_storage = \"$UNIQUE_STORAGE\" >> terraform.tfvars
           - publish: ./terraform.tfvars
             artifact: 'tfvars'
             displayName: Publish generated tfvars file
@@ -54,6 +56,7 @@ stages:
                 ARM_CLIENT_SECRET: $(armClientSecret)
                 ARM_CLIENT_ID: $(armClientId)
                 ARM_SUBSCRIPTION_ID: $(armSubscriptionId)
+                UNIQUE_STORAGE: $(uniqueStorage)
           inputs:
             command: 'init'
             backendType: 'azurerm'
@@ -61,7 +64,7 @@ stages:
             ensureBackend: true
             backendAzureRmResourceGroupName: 'tf-pollinate-rg'
             backendAzureRmResourceGroupLocation: 'westus2'
-            backendAzureRmStorageAccountName: 'tfpollinatestorage'
+            backendAzureRmStorageAccountName: $(uniqueStorage)
             backendAzureRmContainerName: 'tf-datadog-k8s-pollinate'
             backendAzureRmKey: 'tf.state'
             allowTelemetryCollection: true
@@ -77,6 +80,7 @@ stages:
             ARM_CLIENT_SECRET: $(armClientSecret)
             ARM_CLIENT_ID: $(armClientId)
             ARM_SUBSCRIPTION_ID: $(armSubscriptionId)
+            UNIQUE_STORAGE: $(uniqueStorage)
           inputs:
             provider: 'azurerm'
             command: 'plan'
@@ -112,6 +116,7 @@ stages:
                 ARM_CLIENT_SECRET: $(armClientSecret)
                 ARM_CLIENT_ID: $(armClientId)
                 ARM_SUBSCRIPTION_ID: $(armSubscriptionId)
+                UNIQUE_STORAGE: $(uniqueStorage)
           inputs:
             command: 'init'
             backendType: 'azurerm'
@@ -119,7 +124,7 @@ stages:
             ensureBackend: true
             backendAzureRmResourceGroupName: 'tf-pollinate-rg'
             backendAzureRmResourceGroupLocation: 'westus2'
-            backendAzureRmStorageAccountName: 'tfpollinatestorage'
+            backendAzureRmStorageAccountName: $(uniqueStorage)
             backendAzureRmContainerName: 'tf-datadog-k8s-pollinate'
             backendAzureRmKey: 'tf.state'
             allowTelemetryCollection: true
