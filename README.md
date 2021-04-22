@@ -182,3 +182,47 @@ if it gives an error, change uniqueStorage to another unique name and try again.
  <br />
 
 Tested with a new datadog account and new Azure Account(Pay-As-You-Go subscription). (New Azure Accounts may not be allowed to directly use azure pipelines. Create a storage account on dashboard before running something on Azure Pipelines to solve this issue)
+
+
+ <br />
+
+
+How to run locally instead of Azure Pipelines?<br />
+<br />
+Change unique_storage default value and storage_account_name in main.tf to your correct storage account name.<br />
+terraform init<br />
+terraform apply<br />
+commands directly works locally it asks following variables<br />
+var.client_id<br />
+  Enter a value: <REDACTED><br />
+<br />
+var.client_secret<br />
+  Enter a value: <REDACTED><br />
+<br />
+var.datadog_api_key<br />
+  Enter a value: <REDACTED><br />
+<br />
+var.datadog_app_key<br />
+  Enter a value: <REDACTED><br />
+<br />
+var.tenant_name<br />
+  Enter a value: <REDACTED><br />
+ <br />
+Also ensure that these variables are empty<br />
+unset KUBE_CONFIG_FILE<br />
+unset KUBE_CONFIG_FILES<br />
+<br />
+You can also set following env variables:<br />
+export ARM_SUBSCRIPTION_ID=<REDACTED><br />
+export ARM_TENANT_ID=<REDACTED><br />
+export ARM_CLIENT_ID=<REDACTED><br />
+export ARM_CLIENT_SECRET=<REDACTED><br />
+export ARM_ACCESS_KEY=<REDACTED><br />
+export ARM_STORAGE_ACCOUNT_CONTAINER=<REDACTED><br />
+export ARM_STORAGE_ACCOUNT_NAME=<REDACTED><br />
+export datadog_api_key=<REDACTED><br />
+export datadog_app_key=<REDACTED><br />
+export unique_storage=<REDACTED><br />
+
+ 
+ 
