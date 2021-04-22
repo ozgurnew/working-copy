@@ -1,13 +1,18 @@
 # aks-observability-as-code-terraform
 Explanation of the high-level design:
 This configuration uses a remote backend that allows both developers and Azure Pipelines to use the same Terraform state to deploy resources. 
+<br />
  
 Datadog-azure-integration provider is applied directly to the Kubernetes cluster. However, a datadog-agent is also applied to all nodes to gather node-specific metrics, therefore created two modules one is for aks Kubernetes, and the other one is for Kubernetes configuration. 
+<br />
  
 Added a sample Nginx app through Helm. Helm is also used to deploy datadog-agent to each worker node as a daemonSet, so push-model is applied.
+<br />
  
 For K8S SLI's, I picked several aspects to track as a metric. These are the resources managed by K8S CPU, memory, network, storage, uptime, restarts, states.
+<br />
  
+ <br />
 Below you can find these metrics:
 azure.compute_virtualmachinescalesets.data_disk_bandwidth_consumed_percentage
 kubernetes_state.pod.count
@@ -22,10 +27,12 @@ datadog.process.agent
 kubernetes_state.deployment.replicas_available
 datadog.cluster_agent.running
 kubernetes.containers.restarts
+<br />
  
  
  
 To pick Good SLIs picked for K8S. I focused on the reason K8S used in the first place. It's primarily used for high availability and scalability. Among all candidate metrics, 6 of them seemed crucial to me:
+<br />
 1. "Average running K8S pods": shows that k8s is running.
 2. "Remaining allocatable memory". This shows that k8s still has memory to operate.
  3. "Avg CPU Usage Percentage". Calculated as 13 on Idle if it's near to 90, it may say a lot about the k8s scalability.
