@@ -97,7 +97,7 @@ resource "datadog_dashboard" "ordered_dashboard" {
     }
     query_value_definition {
       request {
-        q          = "avg:azure.containerservice_managedclusters.node_cpu_usage_percentage{*}"
+        q          = "avg:system.cpu.user{*}"
         aggregator = "avg"
       }
 
