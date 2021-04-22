@@ -1,6 +1,6 @@
 # aks-observability-as-code-terraform
 Explanation of the high-level design:
-This configuration uses a remote backend that allows both developers and Azure Pipelines to use the same Terraform state to deploy resources. 
+This configuration uses a remote backend that allows both developers and Azure Pipeline to use the same Terraform state to deploy resources. 
 <br />
  <br />
 Datadog-azure-integration provider is applied directly to the Kubernetes cluster. However, a datadog-agent is also applied to all nodes to gather node-specific metrics, therefore created two modules one is for aks Kubernetes, and the other one is for Kubernetes configuration. 
@@ -67,7 +67,7 @@ Why didn't I automate it? : A developer should authenticate at least one time us
 Why didn't I automate it? : Not all subscription types support Azure pipeline build agents, so keeping Azure's platform decisions on track with the declared code is almost impossible. It needs to be updated so often. But it can be automated easily to get the subscription, and if the subscription type is allowed to create service connections, create them.<br />
 3.Installation of Terraform<br />
 4.Installation of Azure CLI  <br />
-1. Buying service agents on Azure Pipelines. This process also can be automated, but the developer that is forking this repository may not be comfortable with the code that is spending her money, and it's dictated. It should be purchased via Azure. They should sell that for trust issues.<br />
+5. Buying service agents on Azure Pipelines. This process also can be automated, but the developer that is forking this repository may not be comfortable with the code that is spending her money, and it's dictated. It should be purchased via Azure. They should sell that for trust issues.<br />
  <br />
  <br />
 Tests:<br />
@@ -172,4 +172,7 @@ uniqueStorage=tfpollinatestorage<br />
  Save and run<br />
 if it gives an error, change uniqueStorage to another unique name and try again. Changing your storageName changes your state.<br />
  <br />
+ Check datadog dashboard that is created.
+ <br />
 
+Tested with a new datadog account and new Azure Account(Pay-As-You-Go subscription). (New Azure Accounts may not be allowed to directly use azure pipelines. Create a storage account on dashboard to solve this issue)
