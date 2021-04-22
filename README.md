@@ -35,10 +35,10 @@ To pick Good SLIs picked for K8S. I focused on the reason K8S used in the first 
 <br />
 1. "Average running K8S pods": shows that k8s is running.<br />
 2. "Remaining allocatable memory". This shows that k8s still has memory to operate.<br />
- 3. "Avg CPU Usage Percentage". Calculated as 13 on Idle if it's near to 90, it may say a lot about the k8s scalability.<br />
- 4. "Restarts" Restarts can be a good indicator of problems in Kubernetes. Due to the nature of Kubernetes, it's so easy to fall into an over-provisioning trap. Keeping this metric in front can say about the health even though the k8s is highly available and ok on other metrics.<br />
- 5. "Healthy pods" on 1st metric pods are running, but frequently, due to the nature of Kubernetes in case of failure, pods can continue running, but the service may not work.<br />
- 6. "Kubernetes Rest Api Response Latency" I wanted to add a latency metric so it may say a lot about the service's performance. Degraded performance can be explained with high delays, which often may start other errors due to timeouts.<br />
+3. "Avg CPU Usage Percentage". Calculated as 13 on Idle if it's near to 90, it may say a lot about the k8s scalability.<br />
+4. "Restarts" Restarts can be a good indicator of problems in Kubernetes. Due to the nature of Kubernetes, it's so easy to fall into an over-provisioning trap. Keeping this metric in front can say about the health even though the k8s is highly available and ok on other metrics.<br />
+5. "Healthy pods" on 1st metric pods are running, but frequently, due to the nature of Kubernetes in case of failure, pods can continue running, but the service may not work.<br />
+6. "Kubernetes Rest Api Response Latency" I wanted to add a latency metric so it may say a lot about the service's performance. Degraded performance can be explained with high delays, which often may start other errors due to timeouts.<br />
  <br />
 I have some candidate SLOs in my mind to declare. i.e. 30% average CPU percentage across worker nodes can be a good start of the SLO. It's always essential to apply measure, validate, iterate and change or edit SLOs by gathering data from actual world usage. It's hard to simulate real-world use, so SLOs determined without an actual world usage is probably flawed. However, it's good to start with a line in the sand and iterate over it.<br />
  <br />
@@ -121,11 +121,11 @@ Install Azure CLI<br />
 2. A Github account so you can easily fork this repo and deploy it on Azure Pipelines.<br />
  3. Create a new organization at Azure DevOps Organizations<br />
  4. Create a project <br />
- Install <br />
-https://marketplace.visualstudio.com/items?itemName=ms-devlabs.custom-terraform-tasks<br />
-and<br />
-https://marketplace.visualstudio.com/items?itemName=charleszipp.azure-pipelines-tasks-terraform<br />
-on your organization<br />
+     Install <br />
+    https://marketplace.visualstudio.com/items?itemName=ms-devlabs.custom-terraform-tasks<br />
+    and<br />
+    https://marketplace.visualstudio.com/items?itemName=charleszipp.azure-pipelines-tasks-terraform<br />
+    on your organization<br />
  5. Create a pipeline<br />
  6. Fork https://github.com/ozgurozkan123/aks-observability-as-code-terraform<br />
  7. Select repo<br />
@@ -133,19 +133,19 @@ on your organization<br />
  9.Select Existing Azure Pipelines YAML File<br />
  10. On the main branch, select /azure_pipelines.yml file as path<br />
  11. You need to add variables<br />
- armClientSecret<br />
-  armClientId<br />
- armSubscriptionId<br />
- armTenantId<br />
- datadogApiKey<br />
- datadogAppKey<br />
- serviceConnection<br />
-uniqueStorage<br />
- <br />
- <br />
+    armClientSecret<br />
+     armClientId<br />
+    armSubscriptionId<br />
+    armTenantId<br />
+    datadogApiKey<br />
+    datadogAppKey<br />
+    serviceConnection<br />
+   uniqueStorage<br />
+   <br />
+   <br />
  How to get them:<br />
     a)On terminal:<br />
-az login <br />
+      az login <br />
 a.1)Keep your subscription id shown on terminal armSubscriptionId=YOURVALUEOF"id"<br />
 az ad sp create-for-rbac -n "CHANGEHERETOUNIQUENAME" --role contributor<br />
      a.2) Keep the appId password and tenant for future reference and keep them safe<br />
