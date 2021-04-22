@@ -32,6 +32,7 @@ variable "client_secret" {
 #ENV uniqueStorage
 variable "unique_storage" {
    type = string
+  #change default with correct storage for local apply
   default = "tfpollinatestorage"
   }
 
