@@ -31,11 +31,11 @@ kubernetes.containers.restarts<br />
  <br />
  <br />
  <br />
-To pick Good SLIs picked for K8S. I focused on the reasons K8S used in the first place. It's primarily used for high availability and scalability. Among all candidate metrics, 6 of them seemed crucial to me:
+To pick Good SLIs picked for K8S, I focused on the common reasons for K8S usage. It's primarily used for high availability and scalability. Among all candidate metrics, 6 of them seemed crucial to me:
 <br />
 1. "Average running K8S pods": shows that k8s is running.<br />
 2. "Remaining allocatable memory". This shows that k8s still has memory to operate.<br />
-3. "Avg CPU Usage Percentage". Calculated as 7-8% on Idle if it's near to 90, it may say a lot about the k8s scalability.<br />
+3. "Avg CPU Usage Percentage". Calculated as 7-8% on Idle, it may say a lot about the k8s scalability and utilization.<br />
 4. "Restarts" Restarts can be a good indicator of problems in Kubernetes. Due to the nature of Kubernetes, it's so easy to fall into an over-provisioning trap. Keeping this metric in front can say about the health even though the k8s is highly available and ok on other metrics.<br />
 5. "Healthy pods" on 1st metric pods are running, but frequently, due to the nature of Kubernetes in case of failure, pods can continue running, but the service may not work.<br />
 6. "Kubernetes Rest Api Response Latency" I wanted to add a latency metric so it may say a lot about the service's performance. Degraded performance can be explained with high delays, which often may start other errors due to timeouts.<br />
@@ -46,7 +46,12 @@ I have some candidate SLOs in my mind to declare. i.e. 30% average CPU percentag
 For an enterprise-level IAC repository, I would prefer to use Terragrunt next time. I didn't choose to use it because there wasn't a prod and non-prod environment in the requirements. It lets you follow DRY principles in Terraform easily. For prod, dev, test environments, one may want to copy resources, and it's so easy to follow the fallacy of copying and repeat existing resources, which further complicates the code between prod and dev environments. Although it can be applied through different branches, it becomes hard to maintain after a while. The declarative nature of Terraform supports a single source of truth code to deploy infrastructure. Different but similar environments' default directory mechanism forces you to copy resources between environments, which violates DRY principles. Modules become bigger and bigger, and maintaining them becomes harder.<br />
  <br />
  <br />
-I tried to keep inputs as low as possible. When inputs are increased in Terraform modules, it becomes hard to follow and use a working code. Here's what I experienced: Input descriptions are not so helpful, and in the cloud world, it's so easy to mess it up. The first example is when versions change code maintainer can change the field type too, so instead of boolean, the field can become an input file name string. The second example is that descriptions are primarily like "base64 encoded version of access key". Is it the file's name, or is it the key itself, or is it the base64 encoded version of the key? So to overcome that, I followed this process. If a resource doesn't exist, terraform creates it. If the module input doesn't have to be determined by the user let's ignore it for now. These can still be provided through environment variables, but they shouldn't be on the same level as mandatory ones. So a developer should be able to start directly by only applying required inputs. After a successful start, the developer should be able to customize other optional variables.<br />
+I tried to keep inputs as low as possible. When inputs are increased in Terraform modules, it becomes hard to follow and use a working code. Here's what I experienced: Input descriptions are not so helpful, and in the cloud world, it's so easy to mess it up. 
+<br />
+The first example is when versions change code maintainer can change the field type too, so instead of boolean, the field can become an input file name string.<br />
+The second example is that descriptions are primarily like "base64 encoded version of access key". Is it the file's name, or is it the key itself, or is it the base64 encoded version of the key?<br />
+
+So to overcome these common issues, I followed this process: If a resource doesn't exist, terraform creates it. If the module input doesn't have to be determined by the user it defaults to a value for now. Some optional arguments can still be provided through environment variables, but they shouldn't be on the same level as mandatory ones. So a developer should be able to start directly by only applying required inputs. After a successful start, the developer should be able to customize other optional variables.<br />
  <br />
 Example mandatory fields:<br />
 Datadog api and app keys<br />
@@ -68,6 +73,7 @@ Why didn't I automate it? : Not all subscription types support Azure pipeline bu
 3.Installation of Terraform<br />
 4.Installation of Azure CLI  <br />
 5. Buying service agents on Azure Pipelines. This process also can be automated, but the developer that is forking this repository may not be comfortable with the code that is spending her money, and it's dictated. It should be purchased via Azure. They should sell that for trust issues.<br />
+6. Automating Azure Pipelines itself through Azure DevOps Provider: This could be the bonus question of the assignment. Even though automating every Azure interaction through providers is prossible. It can be a more reliable and faster way to get another developer onboard. A more modular SRE can be applied through all automated Azure interactions.
  <br />
  <br />
 Tests:<br />
@@ -122,20 +128,20 @@ How to run:<br />
 Install Azure CLI<br />
 1. You need an Azure Account ( Your subscription shouldn't be a free trial. a Free trial doesn't support Azure Pipelines' parallel agents ). <br />
 2. A Github account so you can easily fork this repo and deploy it on Azure Pipelines.<br />
- 3. Create a new organization at Azure DevOps Organizations<br />
- 4. Create a project <br />
+3. Create a new organization at Azure DevOps Organizations<br />
+4. Create a project <br />
      Install <br />
     https://marketplace.visualstudio.com/items?itemName=ms-devlabs.custom-terraform-tasks<br />
     and<br />
     https://marketplace.visualstudio.com/items?itemName=charleszipp.azure-pipelines-tasks-terraform<br />
     on your organization<br />
- 5. Create a pipeline<br />
- 6. Fork https://github.com/ozgurnew/working-copy<br />
- 7. Select repo<br />
- 8. Give necessary permissions<br />
- 9.Select Existing Azure Pipelines YAML File<br />
- 10. On the main branch, select /azure_pipelines.yml file as path<br />
- 11. You need to add variables<br />
+5. Create a pipeline<br />
+6. Fork https://github.com/ozgurnew/working-copy<br />
+7. Select repo<br />
+8. Give necessary permissions<br />
+9.Select Existing Azure Pipelines YAML File<br />
+10. On the main branch, select /azure_pipelines.yml file as path<br />
+11. You need to add variables<br />
     armClientSecret<br />
      armClientId<br />
     armSubscriptionId<br />
